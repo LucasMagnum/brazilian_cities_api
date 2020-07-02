@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"unicode"
@@ -59,8 +60,13 @@ func main() {
 		writer.Write(jsonResponse)
 	})
 
-	log.Println("Server running on Port :8009")
-	log.Fatal(http.ListenAndServe(":8009", nil))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8009"
+	}
+
+	log.Printf("Server running on Port :%s \n", port)
+	log.Fatal(http.ListenAndServe(":" + port, nil))
 
 }
 
