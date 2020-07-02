@@ -1,9 +1,11 @@
 Brazilian Cities API
 ====================
 
-This API contains the 99% of the brazilian cities, with a search endpoint.
+This API contains most of the brazilian cities and can be used as search database.
 
-The search will normalize both the output, and the input to return a wider number of results.
+It contains the `cities` endpoint that will return all cities in the system and accept
+a `q` parameter to do a `text` search based on the city name.
+
 
 
 API
