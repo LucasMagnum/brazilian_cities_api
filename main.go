@@ -14,29 +14,27 @@ import (
 )
 import _ "golang.org/x/text/unicode/norm"
 
-
 type State struct {
-	Id int `json:"id"`
-	Name string `json:"name"`
+	Id      int    `json:"id"`
+	Name    string `json:"name"`
 	Verbose string `json:"verbose"`
 }
 
 type City struct {
-	Id int `json:"id"`
-	Name string `json:"name"`
-	StateId int `json:"state_id"`
+	Id      int    `json:"id"`
+	Name    string `json:"name"`
+	StateId int    `json:"state_id"`
 }
 
 type ResponseCity struct {
-	Id int `json:"id"`
-	Name string `json:"name"`
+	Id      int    `json:"id"`
+	Name    string `json:"name"`
 	Verbose string `json:"verbose"`
-	State State `json:"state"`
+	State   State  `json:"state"`
 }
 
-
 type CitiesFile struct {
-	Cities []City `json:"cities"`
+	Cities []City  `json:"cities"`
 	States []State `json:"states"`
 }
 
@@ -66,8 +64,7 @@ func main() {
 	}
 
 	log.Printf("Server running on Port :%s \n", port)
-	log.Fatal(http.ListenAndServe(":" + port, nil))
-
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
 
 func loadCities() CitiesFile {
@@ -88,10 +85,10 @@ func buildResponseCities(file CitiesFile) []ResponseCity {
 		state := states[city.StateId]
 
 		cities = append(cities, ResponseCity{
-			Id: city.Id,
-			Name: city.Name,
+			Id:      city.Id,
+			Name:    city.Name,
 			Verbose: city.Name + ", " + state.Name,
-			State: state,
+			State:   state,
 		})
 	}
 
