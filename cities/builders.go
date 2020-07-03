@@ -1,32 +1,40 @@
 package cities
 
+func BuildOutputCities(citiesInputValues CitiesInputValues) []CityOutputValue {
+	var cities []CityOutputValue
+	states := BuildStatesMap(citiesInputValues.States)
 
-func BuildResponseCities(file CitiesFile) []ResponseCity {
-	var cities []ResponseCity
-	states := BuildStatesMap(file)
-
-	for idx := range file.Cities {
-		city := file.Cities[idx]
+	for idx := range citiesInputValues.Cities {
+		city := citiesInputValues.Cities[idx]
 		state := states[city.StateId]
 
-		cities = append(cities, ResponseCity{
-			Id:      city.Id,
-			Name:    city.Name,
-			Verbose: city.Name + ", " + state.Name,
-			State:   state,
-		})
+		cities = append(cities, BuildOutputCity(city, state))
 	}
 
 	return cities
 }
 
-func BuildStatesMap(file CitiesFile) map[int]State {
-	states := map[int]State{}
+func BuildOutputCity(city cityInputValue, state StateOutputValue) CityOutputValue {
+	return CityOutputValue{
+		Id:             city.Id,
+		Name:           city.Name,
+		NormalizedName: NormalizeString(city.Name),
+		Verbose:        city.Name + ", " + state.Name,
+		State:          state,
+	}
+}
 
-	for idx := range file.States {
-		state := file.States[idx]
-		states[state.Id] = state
+func BuildStatesMap(states []stateInputValue) map[int]StateOutputValue {
+	mapping := map[int]StateOutputValue{}
+
+	for idx := range states {
+		state := states[idx]
+		mapping[state.Id] = StateOutputValue{
+			Id:      state.Id,
+			Name:    state.Name,
+			Verbose: state.Verbose,
+		}
 	}
 
-	return states
+	return mapping
 }
