@@ -54,6 +54,8 @@ func main() {
 			jsonResponse = allCitiesJSON
 		}
 
+		writer.Header().Set("access-control-allow-origin", "*")
+		writer.Header().Set("access-control-allow-methods", "GET,OPTIONS")
 		writer.Header().Set("content-type", "application/json")
 		writer.Write(jsonResponse)
 	})
